@@ -1,1 +1,5 @@
-
+pyrogram==2.0.19
+tgcrypto
+motor
+aiohttp
+python-dotenv
