@@ -13,6 +13,16 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # =====================================
+# 🕒 TIME SYNC FIX (prevents msg_id too low error)
+# =====================================
+import time
+import asyncio
+
+# Wait briefly to allow system time sync
+asyncio.get_event_loop().run_until_complete(asyncio.sleep(2))
+print(f"⏰ System time synced: {time.ctime()}")
+
+# =====================================
 # 🔧 CONFIGURATION
 # =====================================
 API_ID = int(os.getenv("API_ID", "0"))
@@ -36,7 +46,6 @@ db = db_client["terabox_converter"]
 users = db["users"]
 
 app = Client("TeraBoxMultiBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
-
 
 # =====================================
 # 🧠 HELPER FUNCTIONS
