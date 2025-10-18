@@ -23,6 +23,25 @@ asyncio.get_event_loop().run_until_complete(asyncio.sleep(2))
 print(f"⏰ System time synced: {time.ctime()}")
 
 # =====================================
+# 🕒 EXTRA TIME SYNC CHECK (NTP-based)
+# =====================================
+import ntplib  # Make sure to add "ntplib" in requirements.txt
+
+def sync_time_ntp():
+    try:
+        client = ntplib.NTPClient()
+        response = client.request("pool.ntp.org", version=3)
+        diff = response.tx_time - time.time()
+        print(f"🌍 NTP time difference: {diff:.3f} seconds")
+        if abs(diff) > 1:
+            print("⚙️ Adjusting minor drift... safe delay before bot start")
+            time.sleep(2)
+    except Exception as e:
+        print(f"⚠️ NTP sync skipped: {e}")
+
+sync_time_ntp()
+
+# =====================================
 # 🔧 CONFIGURATION
 # =====================================
 API_ID = int(os.getenv("API_ID", "0"))
